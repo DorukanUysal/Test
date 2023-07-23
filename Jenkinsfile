@@ -24,6 +24,25 @@ pipeline {
         steps {
           sh 'pip3 install semgrep'
           sh 'semgrep ci'
+stage('Clone Repository') {
+            steps {
+                // GitHub reposunu Jenkins çalışma alanına klonlayın
+                git 'https://github.com/KULLANICI_ADI/REPO_ADI.git'
+            }
+        }
+        stage('OWASP ZAP Baseline Scan') {
+            steps {
+                // OWASP ZAP tarama komutunu burada çalıştırın
+                sh 'owasp-zap-command -t https://github.com/KULLANICI_ADI/REPO_ADI.git -r report.html'
+            }
+        }
+        stage('Publish Results') {
+            steps {
+                // OWASP ZAP raporlarını uygun bir şekilde yayınlayın
+                publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, 
+                            keepAll: true, reportDir: 'reports', reportFiles: 'report.html'])
+            }
+        }
       }
     }
   }
