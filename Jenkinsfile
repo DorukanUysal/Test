@@ -26,19 +26,19 @@ pipeline {
           sh 'semgrep ci'
 stage('Clone Repository') {
             steps {
-                // GitHub reposunu Jenkins çalışma alanına klonlayın
-                git 'https://github.com/KULLANICI_ADI/REPO_ADI.git'
+                // GitHub reposunu Jenkins çalışma alanına klonladık
+                git 'https://github.com/DorukanUysal/Test.git'
             }
         }
         stage('OWASP ZAP Baseline Scan') {
             steps {
-                // OWASP ZAP tarama komutunu burada çalıştırın
-                sh 'owasp-zap-command -t https://github.com/KULLANICI_ADI/REPO_ADI.git -r report.html'
+                // OWASP ZAP tarama komutu
+                sh 'owasp-zap-command -t https://github.com/DorukanUysal/Test.git -r report.html'
             }
         }
         stage('Publish Results') {
             steps {
-                // OWASP ZAP raporlarını uygun bir şekilde yayınlayın
+                // OWASP ZAP raporları
                 publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, 
                             keepAll: true, reportDir: 'reports', reportFiles: 'report.html'])
             }
