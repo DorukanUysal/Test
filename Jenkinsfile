@@ -1,21 +1,22 @@
 pipeline {
-  agent any
-    environment {
+    agent any
+  environment {
+      // SEMGREP_BASELINE_REF = ""
 
-      PATH = "C:\\Users\\doruk\\AppData\\Local\\Programs\\Python\\Python311\\Scripts;${env.PATH}"
-      SEMGREP_RULES = "p/default" 
-      SEMGREP_BRANCH = "${GIT_BRANCH}"
+        SEMGREP_APP_TOKEN = credentials('SEMGREP_APP_TOKEN')
+        SEMGREP_PR_ID = "${env.CHANGE_ID}"
 
-      // Uncomment the following line to scan changed 
-      // files in PRs or MRs (diff-aware scanning): 
-      // SEMGREP_BASELINE_REF = "main"
+      //  SEMGREP_TIMEOUT = "300"
+
+PATH = "C:\\Users\\doruk\\AppData\\Local\\Programs\\Python\\Python311\\Scripts;${env.PATH}"
+
     }
     stages {
       stage('Semgrep-Scan') {
-        steps {
-          bat 'pip install semgrep'
-          bat 'semgrep ci'
+          steps {
+            sh 'pip3 install semgrep'
+            sh 'semgrep ci'
+          }
       }
     }
   }
-}
