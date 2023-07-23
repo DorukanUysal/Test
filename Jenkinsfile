@@ -1,6 +1,8 @@
 pipeline {
   agent any
     environment {
+
+      PATH = "C:\\Users\\doruk\\AppData\\Local\\Programs\\Python\\Python311\\Scripts;${env.PATH}"
       SEMGREP_RULES = "p/default" 
       SEMGREP_BRANCH = "${GIT_BRANCH}"
 
