@@ -1,26 +1,24 @@
-pipeline {
-  agent any
+ pipeline {
+    agent any
+  environment {
+      // SEMGREP_BASELINE_REF = ""
+PATH = "C:\\Users\\doruk\\AppData\\Local\\Programs\\Python\\Python311\\Scripts;${env.PATH}"
+SEMGREP_PATH = "C:\\Users\\doruk\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\semgrep;${env.PATH}"
 
-  stages {
-    stage('Build') {
-      steps {
-        echo 'Building...'
-      }
+
+        SEMGREP_APP_TOKEN = credentials('SEMGREP_APP_TOKEN')
+        SEMGREP_PR_ID = "${env.CHANGE_ID}"
+
+      //  SEMGREP_TIMEOUT = "300"
     }
-    stage('Test') {
-      steps {
-        echo 'Testing...'
-        snykSecurity(
-          snykInstallation: '<synk>',
-          snykTokenId: '<Your Snyk API Token ID>',
-          // place other parameters here
-        )
-      }
-    }
-    stage('Deploy') {
-      steps {
-        echo 'Deploying...'
+    stages {
+      stage('Semgrep-Scan') {
+          steps {
+            bat 'pip3 install semgrep'
+            bat 'semgrep ci'
+           
+          }
       }
     }
   }
-}
+
