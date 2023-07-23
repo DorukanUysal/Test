@@ -22,3 +22,4 @@ SEMGREP_PATH = "C:\\Users\\doruk\\AppData\\Local\\Programs\\Python\\Python311\\L
     }
   }
 
+
