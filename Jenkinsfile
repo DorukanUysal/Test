@@ -3,7 +3,6 @@ pipeline {
     environment {
 
       PATH = "C:\\Users\\doruk\\AppData\\Local\\Programs\\Python\\Python311\\Scripts;${env.PATH}"
-      PATH = "C:\Users\doruk\AppData\Local\Programs\Python\Python311\Scripts\semgrep;${env.PATH}"
       SEMGREP_RULES = "p/default" 
       SEMGREP_BRANCH = "${GIT_BRANCH}"
 
