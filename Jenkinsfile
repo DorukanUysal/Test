@@ -14,6 +14,7 @@ SEMGREP_PATH = "C:\Users\\doruk\\AppData\\Local\\Programs\\Python\\Python311\\Li
     stages {
       stage('Semgrep-Scan') {
           steps {
+            bat 'pip3 install semgrep'
             bat 'semgrep ci'
            
           }
