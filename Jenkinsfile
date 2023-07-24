@@ -30,6 +30,7 @@ pipeline {
               -e SEMGREP_COMMIT=${SEMGREP_COMMIT} \
               -e SEMGREP_PR_ID=${SEMGREP_PR_ID} \
               -v ${WORKSPACE}:/src \
+              --config
               ${semgrepImage} semgrep ci"
 
           bat(semgrepCmd) // For Windows
