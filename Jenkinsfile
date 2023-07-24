@@ -22,7 +22,7 @@ pipeline {
     stages {
       stage('Semgrep-Scan') {
         steps {
-            sh '''docker pull returntocorp/semgrep && \
+            bat '''docker pull returntocorp/semgrep && \
             docker run \
             -e SEMGREP_APP_TOKEN=$SEMGREP_APP_TOKEN \
             -e SEMGREP_REPO_URL=$SEMGREP_REPO_URL \
