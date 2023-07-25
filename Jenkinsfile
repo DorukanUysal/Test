@@ -1,9 +1,7 @@
-
 pipeline {
   agent any
-
+   
     stages {
-
       stage('Semgrep-Scan') {
         steps {
             bat '''docker pull returntocorp/semgrep && \
@@ -16,10 +14,8 @@ pipeline {
             -e SEMGREP_PR_ID=$SEMGREP_PR_ID \
             -v "$(pwd):$(pwd)" --workdir $(pwd) \
              semgrep --config=auto
-             semgrep ci"
 
             returntocorp/semgrep semgrep ci '''
-
       }
     }
   }
