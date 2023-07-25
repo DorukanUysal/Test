@@ -31,7 +31,9 @@ pipeline {
             -e SEMGREP_COMMIT=$SEMGREP_COMMIT \
             -e SEMGREP_PR_ID=$SEMGREP_PR_ID \
             -v "$(pwd):$(pwd)" --workdir $(pwd) \
-             semgrep --config=auto C:\Users\doruk\OneDrive\Masaüstü\Yeni klasör\Test-main
+            ${semgrepImage} semgrep --config=auto
+              ${semgrepImage} semgrep ci"
+
             returntocorp/semgrep semgrep ci '''
 
       }
