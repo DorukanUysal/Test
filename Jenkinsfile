@@ -1,6 +1,8 @@
 pipeline {
   agent any
-   
+   environment {
+        PATH = "${env.PATH};/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" // Örnek olarak, C:\mytools dizinini PATH'e ekliyoruz
+    }
     stages {
       stage('Semgrep-Scan') {
         steps {
