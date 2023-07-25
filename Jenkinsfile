@@ -1,7 +1,6 @@
 
 pipeline {
   agent any
-def semgrepImage = "docker.io/returntocorp/semgrep:latest"
 
     stages {
 
