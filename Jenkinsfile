@@ -15,8 +15,8 @@ pipeline {
             -e SEMGREP_COMMIT=$SEMGREP_COMMIT \
             -e SEMGREP_PR_ID=$SEMGREP_PR_ID \
             -v "$(pwd):$(pwd)" --workdir $(pwd) \
-            ${semgrepImage} semgrep --config=auto
-              ${semgrepImage} semgrep ci"
+             semgrep --config=auto
+             semgrep ci"
 
             returntocorp/semgrep semgrep ci '''
 
