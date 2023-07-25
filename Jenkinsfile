@@ -4,15 +4,7 @@ pipeline {
 def semgrepImage = "docker.io/returntocorp/semgrep:latest"
 
     stages {
- stage('Run Sempgrep') {
-            steps {
-                script {
-                    docker.image(semgrepImage).inside {
-                        sh 'semgrep --config=auto'
-                    }
-                }
-            }
-        }
+
       stage('Semgrep-Scan') {
         steps {
             bat '''docker pull returntocorp/semgrep && \
