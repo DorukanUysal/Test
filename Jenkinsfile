@@ -30,7 +30,7 @@ pipeline {
               -e SEMGREP_COMMIT=${SEMGREP_COMMIT} \
               -e SEMGREP_PR_ID=${SEMGREP_PR_ID} \
               -v ${WORKSPACE}:/src \
-              ${semgrepImage} semgrep --config=auto https://github.com/DorukanUysal/Test
+              ${semgrepImage} semgrep --config=auto C:\Users\doruk\OneDrive\Masaüstü\Test-main.zip\Test-main
               ${semgrepImage} semgrep ci"
 
           bat(semgrepCmd) // For Windows
