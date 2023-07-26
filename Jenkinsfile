@@ -42,7 +42,7 @@ stage('Semgrep-Scan') {
             -e SEMGREP_BRANCH=$SEMGREP_BRANCH \
             -e SEMGREP_COMMIT=$SEMGREP_COMMIT \
             -e SEMGREP_PR_ID=$SEMGREP_PR_ID \
-            -v "$(pwd):$(pwd)" --workdir $(pwd) \
+            -v "%WORKSPACE%:%WORKSPACE%" --workdir "%WORKSPACE%" \
             returntocorp/semgrep semgrep ci '''
       }
     }
