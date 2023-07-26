@@ -31,6 +31,27 @@ stage('Setting up OWASP ZAP docker container') {
              bat "docker exec owasp zap-baseline.py -t http://www.example.com/ -I -j --auto -r testreport.html"
             }
         }
+
+stage('Build') {
+      steps {
+        echo 'Building...'
+      }
+    }
+    stage('Test') {
+      steps {
+        echo 'Testing...'
+        snykSecurity(
+          snykInstallation: '<DorukanUysal>',
+          snykTokenId: '<78b1ec19-3e58-4712-b933-52195c781373>',
+          // place other parameters here
+        )
+      }
+    }
+    stage('Deploy') {
+      steps {
+        echo 'Deploying...'
+      }
+    }
 stage('Semgrep-Scan') {
         steps {
             bat '''docker pull returntocorp/semgrep && \
