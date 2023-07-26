@@ -56,9 +56,10 @@ stage('Build') {
 stage('Semgrep-Scan') {
             steps {
                 script {
-                    // Convert the workspace path to an absolute path for Docker on Windows
-                    def absWorkspace = powershell(returnStdout: true, script: "(Get-Item -Path \"%WORKSPACE%\").FullName").trim()
-                    
+                    // Çalışma alanını Groovy tarafında alın
+                    def absWorkspace = pwd()
+
+                    // Çalışma dizinini PowerShell komutunda kullanın
                     bat """
                         docker pull returntocorp/semgrep && ^
                         docker run ^
@@ -69,7 +70,7 @@ stage('Semgrep-Scan') {
                         -e SEMGREP_BRANCH=$SEMGREP_BRANCH ^
                         -e SEMGREP_COMMIT=$SEMGREP_COMMIT ^
                         -e SEMGREP_PR_ID=$SEMGREP_PR_ID ^
-                        -v "${absWorkspace}:${absWorkspace}" --workdir "${absWorkspace}" ^
+                        -v \"${absWorkspace}:${absWorkspace}\" --workdir \"${absWorkspace}\" ^
                         returntocorp/semgrep semgrep ci
                     """
                 }
