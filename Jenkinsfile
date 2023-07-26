@@ -1,5 +1,10 @@
 pipeline {
   agent any
+environment {
+      // The following variable is required for a Semgrep Cloud Platform-connected scan:
+      SEMGREP_APP_TOKEN = credentials('SEMGREP_APP_TOKEN')
+}
+
   stages {
 
  stage('Stop and Remove Container1') {
@@ -26,17 +31,11 @@ stage('Setting up OWASP ZAP docker container') {
              bat "docker exec owasp zap-baseline.py -t http://www.example.com/ -I -j --auto -r testreport.html"
             }
         }
-stage('Clone Repository') {
-            steps {
-                // Git repo klonlamak için gerekli adımlar
-                bat 'git clone https://github.com/DorukanUysal/Test.git'
-            }
-        }
-
-        stage('Run Semgrep in Docker') {
-            steps {
-                bat '''docker pull returntocorp/semgrep && \
-            docker run 
+stage('Semgrep-Scan') {
+        steps {
+            bat '''docker pull returntocorp/semgrep && \
+            docker run \
+            -e SEMGREP_APP_TOKEN=$SEMGREP_APP_TOKEN \
             -e SEMGREP_REPO_URL=$SEMGREP_REPO_URL \
             -e SEMGREP_BRANCH=$SEMGREP_BRANCH \
             -e SEMGREP_REPO_NAME=$SEMGREP_REPO_NAME \
@@ -44,10 +43,10 @@ stage('Clone Repository') {
             -e SEMGREP_COMMIT=$SEMGREP_COMMIT \
             -e SEMGREP_PR_ID=$SEMGREP_PR_ID \
             -v "$(pwd):$(pwd)" --workdir $(pwd) \
-            docker run --rm returntocorp/semgrep semgrep ci '''
-            }
-        }
-    
-  
+            returntocorp/semgrep semgrep ci '''
+      }
+    }
+
+
     }
 }
