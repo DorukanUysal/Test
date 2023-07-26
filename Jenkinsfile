@@ -2,7 +2,7 @@ pipeline {
   agent any
   stages {
 
-stage('Stop and Remove Container') {
+stage('Stop and Remove Container1') {
       steps {
         echo "Removing container"
             bat '''
@@ -24,7 +24,7 @@ stage('Setting up OWASP ZAP docker container') {
             }
         }
     
-    stage('Stop and Remove Container') {
+    stage('Stop and Remove Container2') {
       steps {
         echo "Removing container"
             bat '''
