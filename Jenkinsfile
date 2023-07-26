@@ -42,7 +42,7 @@ stage('Build') {
         echo 'Testing...'
         snykSecurity(
           snykInstallation: 'Synk',
-          snykTokenId: '78b1ec19-3e58-4712-b933-52195c781373',
+          snykTokenId: '51424704-8eb2-4ecd-ba03-f865e2d264d0',
           // place other parameters here
         )
       }
