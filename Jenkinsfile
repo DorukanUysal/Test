@@ -1,7 +1,7 @@
 pipeline {
   agent any
    environment {
-        PATH = "${env.PATH};/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" // Örnek olarak, C:\mytools dizinini PATH'e ekliyoruz
+        PATH = "${env.PATH};/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" 
     }
     stages {
       stage('Semgrep-Scan') {
@@ -17,7 +17,7 @@ pipeline {
             -v "$(pwd):$(pwd)" --workdir $(pwd) \
              semgrep --config=auto
 
-            returntocorp/semgrep semgrep ci '''
+            semgrep ci '''
       }
     }
   }
