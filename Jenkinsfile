@@ -4,7 +4,7 @@ pipeline {
   stage('Setting up OWASP ZAP docker container') {
       steps {
         echo "Starting container --> Start"  
-            bat "docker run --rm -v \$(pwd):/zap/wrk/:rw --name owasp -dt owasp/zap2docker-live /bin/bash"
+            bat "docker run --rm -v \$(pwd):/zap/wrk/:rw --name owasp -dt owasp/zap2docker-stable /bin/bash"
         }
   }
     stage('Run Application') {
