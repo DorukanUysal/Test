@@ -6,7 +6,7 @@ pipeline {
       steps {
         echo "Removing container"
             bat '''
-                docker stop $(docker ps -a -q)
+                docker kill $(docker ps -q)
                '''
              }
          }
