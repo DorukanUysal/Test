@@ -27,14 +27,6 @@ stage('Setting up OWASP ZAP docker container') {
             }
         }
     
-    stage('Stop and Remove Container2') {
-      steps {
-        echo "Removing container"
-            bat '''
-                docker stop owasp/zap2docker-stable
-                docker rm owasp/zap2docker-stable
-               '''
-             }
-         }
+  
     }
 }
