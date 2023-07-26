@@ -6,7 +6,7 @@ pipeline {
       steps {
         echo "Removing container"
             bat '''
-                 docker stop $(docker ps -q)
+                 FOR /f "tokens=*" %i IN ('docker ps -q') DO docker stop %i
 
 
 
