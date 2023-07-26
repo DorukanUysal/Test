@@ -16,7 +16,7 @@ pipeline {
              steps {
                  script {
                      bat '''
-                        docker cp owasp:/zap/wrk/testreport.html C:\ProgramData\Jenkins\.jenkins\workspace\PipelineTest1\testreport.html
+                         docker cp owasp:/zap/wrk/testreport.html ${WORKSPACE}/testreport.html
 
                      '''
                  }
