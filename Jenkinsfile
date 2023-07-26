@@ -3,6 +3,7 @@ pipeline {
 environment {
       // The following variable is required for a Semgrep Cloud Platform-connected scan:
       SEMGREP_APP_TOKEN = credentials('SEMGREP_APP_TOKEN')
+SEMGREP_REPO_URL = 'https://github.com/DorukanUysal/Test.git'
 }
 
   stages {
