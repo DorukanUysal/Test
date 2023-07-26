@@ -54,25 +54,27 @@ stage('Build') {
     }
 */
 stage('Semgrep-Scan') {
-    steps {
-        script {
-            // Convert the workspace path to an absolute path for Docker on Windows
-            def absWorkspace = powershell(returnStdout: true, script: "(Get-Item -Path \"%WORKSPACE%\").FullName").trim()
-            
-            bat '''docker pull returntocorp/semgrep && ^
-            docker run ^
-            -e SEMGREP_APP_TOKEN=$SEMGREP_APP_TOKEN ^
-            -e SEMGREP_REPO_URL=$SEMGREP_REPO_URL ^
-            -e SEMGREP_BRANCH=$SEMGREP_BRANCH ^
-            -e SEMGREP_REPO_NAME=$SEMGREP_REPO_NAME ^
-            -e SEMGREP_BRANCH=$SEMGREP_BRANCH ^
-            -e SEMGREP_COMMIT=$SEMGREP_COMMIT ^
-            -e SEMGREP_PR_ID=$SEMGREP_PR_ID ^
-            -v "${absWorkspace}:${absWorkspace}" --workdir "${absWorkspace}" ^
-            returntocorp/semgrep semgrep ci '''
+            steps {
+                script {
+                    // Convert the workspace path to an absolute path for Docker on Windows
+                    def absWorkspace = powershell(returnStdout: true, script: "(Get-Item -Path \"%WORKSPACE%\").FullName").trim()
+                    
+                    bat """
+                        docker pull returntocorp/semgrep && ^
+                        docker run ^
+                        -e SEMGREP_APP_TOKEN=$SEMGREP_APP_TOKEN ^
+                        -e SEMGREP_REPO_URL=$SEMGREP_REPO_URL ^
+                        -e SEMGREP_BRANCH=$SEMGREP_BRANCH ^
+                        -e SEMGREP_REPO_NAME=$SEMGREP_REPO_NAME ^
+                        -e SEMGREP_BRANCH=$SEMGREP_BRANCH ^
+                        -e SEMGREP_COMMIT=$SEMGREP_COMMIT ^
+                        -e SEMGREP_PR_ID=$SEMGREP_PR_ID ^
+                        -v "${absWorkspace}:${absWorkspace}" --workdir "${absWorkspace}" ^
+                        returntocorp/semgrep semgrep ci
+                    """
+                }
+            }
         }
-    }
-}
 
 
     }
