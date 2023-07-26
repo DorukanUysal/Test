@@ -17,7 +17,7 @@ pipeline {
             -v "$(pwd):$(pwd)" --workdir $(pwd) \
              semgrep --config=auto
 
-            semgrep ci '''
+            returntocorp/semgrep:latest semgrep ci '''
       }
     }
   }
