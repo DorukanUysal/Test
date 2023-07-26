@@ -33,19 +33,17 @@ stage('Setting up OWASP ZAP docker container') {
         }
 stage('Semgrep-Scan') {
         steps {
-           powershell '''
-        docker pull returntocorp/semgrep
-        docker run `
-            -e SEMGREP_APP_TOKEN=$env:SEMGREP_APP_TOKEN `
-            -e SEMGREP_REPO_URL=$env:SEMGREP_REPO_URL `
-            -e SEMGREP_BRANCH=$env:SEMGREP_BRANCH `
-            -e SEMGREP_REPO_NAME=$env:SEMGREP_REPO_NAME `
-            -e SEMGREP_BRANCH=$env:SEMGREP_BRANCH `
-            -e SEMGREP_COMMIT=$env:SEMGREP_COMMIT `
-            -e SEMGREP_PR_ID=$env:SEMGREP_PR_ID `
-            -v "${env:WORKSPACE}:${env:WORKSPACE}" --workdir "${env:WORKSPACE}" `
-            returntocorp/semgrep semgrep ci
-        '''
+            bat '''docker pull returntocorp/semgrep && \
+            docker run \
+            -e SEMGREP_APP_TOKEN=$SEMGREP_APP_TOKEN \
+            -e SEMGREP_REPO_URL=$SEMGREP_REPO_URL \
+            -e SEMGREP_BRANCH=$SEMGREP_BRANCH \
+            -e SEMGREP_REPO_NAME=$SEMGREP_REPO_NAME \
+            -e SEMGREP_BRANCH=$SEMGREP_BRANCH \
+            -e SEMGREP_COMMIT=$SEMGREP_COMMIT \
+            -e SEMGREP_PR_ID=$SEMGREP_PR_ID \
+            -v "%WORKSPACE%:%WORKSPACE%" --workdir "%WORKSPACE%" \
+            returntocorp/semgrep semgrep ci '''
       }
     }
 
