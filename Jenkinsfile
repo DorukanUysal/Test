@@ -32,19 +32,7 @@ stage('Setting up OWASP ZAP docker container') {
             }
         }
 
-stage('Clone from GitHub') {
-            steps {
-                script {
-                    // GitHub repo URL and destination path
-                    def gitRepoUrl = 'https://github.com/juice-shop/juice-shop'
-                    def destinationPath = 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\PipelineTest1'
-bat "git clone ${gitRepoUrl}"
-
-bat "move juice-shop ${destinationPath}"
-}
-            }
-        }
-stage('Build') {
+/*stage('Build') {
       steps {
         echo 'Building...'
       }
@@ -64,6 +52,7 @@ stage('Build') {
         echo 'Deploying...'
       }
     }
+*/
 stage('Semgrep-Scan') {
         steps {
             bat '''docker pull returntocorp/semgrep && \
