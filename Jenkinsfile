@@ -5,6 +5,7 @@ environment {
       SEMGREP_APP_TOKEN = credentials('SEMGREP_APP_TOKEN')
 SEMGREP_REPO_URL = 'https://github.com/DorukanUysal/Test.git'
 SEMGREP_BRANCH = 'main'
+SEMGREP_REPO_NAME = 'Test'
 }
 
   stages {
