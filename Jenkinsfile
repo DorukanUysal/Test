@@ -23,7 +23,7 @@ stage('Setting up OWASP ZAP docker container') {
   }
     stage('Run Application') {
       steps {
-             //bat "docker exec owasp zap-baseline.py -t http://www.example.com/ -I -j --auto -r testreport.html"
+             bat "docker exec owasp zap-baseline.py -t http://www.example.com/ -I -j --auto -r testreport.html"
             }
         }
 stage('Semgrep-Scan') {
