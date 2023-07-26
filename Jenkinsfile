@@ -56,26 +56,37 @@ stage('Build') {
       }
     }
 */
-stage('Semgrep-Scan') {
+pipeline {
+    agent any
+    environment {
+        SEMGREP_REPO_URL = "https://github.com/DorukanUysal/Test.git"
+        SEMGREP_BRANCH = "main"
+        SEMGREP_REPO_NAME = "Test"
+    }
+    stages {
+        stage('Semgrep-Scan') {
             steps {
                 script {
                     // Çalışma alanını Groovy tarafında alın
                     def absWorkspace = pwd()
 
-                    // Çalışma dizinini PowerShell komutunda kullanın
-                    bat """
-                        docker pull returntocorp/semgrep && ^
+                    // PowerShell komutunda değişkenlerin kullanımı $ işareti ile olmalı
+                    powershell """
+                        docker pull returntocorp/semgrep
                         docker run ^
-                        -e SEMGREP_APP_TOKEN=$SEMGREP_APP_TOKEN ^
-                        -e SEMGREP_REPO_URL=$SEMGREP_REPO_URL ^
-                        -e SEMGREP_BRANCH=$SEMGREP_BRANCH ^
-                        -e SEMGREP_REPO_NAME=$SEMGREP_REPO_NAME ^
+                        -e SEMGREP_APP_TOKEN=$Env:SEMGREP_APP_TOKEN ^
+                        -e SEMGREP_REPO_URL=$Env:SEMGREP_REPO_URL ^
+                        -e SEMGREP_BRANCH=$Env:SEMGREP_BRANCH ^
+                        -e SEMGREP_REPO_NAME=$Env:SEMGREP_REPO_NAME ^
                         -v \"${absWorkspace}:${absWorkspace}\" --workdir \"${absWorkspace}\" ^
                         returntocorp/semgrep semgrep ci
                     """
                 }
             }
         }
+    }
+}
+
 
 
     }
