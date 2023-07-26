@@ -6,8 +6,7 @@ pipeline {
       steps {
         echo "Removing container"
             bat '''
-                docker stop owasp/zap2docker-stable
-                docker rm owasp/zap2docker-stable
+                docker stop $(docker ps -a -q)
                '''
              }
          }
