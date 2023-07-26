@@ -56,14 +56,7 @@ stage('Build') {
       }
     }
 */
-pipeline {
-    agent any
-    environment {
-        SEMGREP_REPO_URL = "https://github.com/DorukanUysal/Test.git"
-        SEMGREP_BRANCH = "main"
-        SEMGREP_REPO_NAME = "Test"
-    }
-    stages {
+
         stage('Semgrep-Scan') {
             steps {
                 script {
