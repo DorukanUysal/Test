@@ -26,13 +26,13 @@ stage('Setting up OWASP ZAP docker container') {
             bat "docker run --rm -v %cd%:/zap/wrk/:rw --name owasp -dt owasp/zap2docker-stable /bin/bash"
         }
   }
-    stage('Run Application') {
+    /*stage('Run Application') {
       steps {
              bat "docker exec owasp zap-baseline.py -t http://www.example.com/ -I -j --auto -r testreport.html"
             }
         }
 
-/*stage('Build') {
+stage('Build') {
       steps {
         echo 'Building...'
       }
