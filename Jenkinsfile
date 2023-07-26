@@ -1,11 +1,6 @@
 pipeline {
   agent any
   stages {
-    stage('Get Write Access'){
-      steps {
-             bat "chmod 777 \$(pwd)"
-      }
-    }
   stage('Setting up OWASP ZAP docker container') {
       steps {
         echo "Starting container --> Start"  
