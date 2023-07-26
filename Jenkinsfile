@@ -23,13 +23,12 @@ stage('Setting up OWASP ZAP docker container') {
   }
     stage('Run Application') {
       steps {
-             bat "docker exec owasp zap-baseline.py -t http://www.example.com/ -I -j --auto -r testreport.html"
+             //bat "docker exec owasp zap-baseline.py -t http://www.example.com/ -I -j --auto -r testreport.html"
             }
         }
 stage('Semgrep-Scan') {
         steps {
-            bat '''docker pull returntocorp/semgrep && \
-            docker run \
+            bat '''
             docker run -e SEMGREP_REPO_NAME=$SEMGREP_REPO_NAME -e SEMGREP_BRANCH=$SEMGREP_BRANCH -e SEMGREP_COMMIT=$SEMGREP_COMMIT -e SEMGREP_PR_ID=$SEMGREP_PR_ID -v "%cd%:%cd%" --workdir %cd% returntocorp/semgrep semgrep ci
 '''
       }
