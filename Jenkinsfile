@@ -57,20 +57,20 @@ stage('Build') {
     }
 */
 
-  stage('Semgrep-Scan') {
+ stage('Semgrep-Scan') {
     steps {
         script {
-            // Çalışma alanını Groovy tarafında alın
+            // Çalışma alanını Groovy tarafından alın
             def absWorkspace = pwd()
 
-            // PowerShell komutunda değişkenlerin kullanımı $ işareti ile olmalı
+            // PowerShell komutunda çevresel değişkenler için $env: kullanın
             powershell """
                 docker pull returntocorp/semgrep
-                docker run ^
-                -e SEMGREP_APP_TOKEN=`$Env:SEMGREP_APP_TOKEN ^
-                -e SEMGREP_REPO_URL=`$Env:SEMGREP_REPO_URL ^
-                -e SEMGREP_BRANCH=`$Env:SEMGREP_BRANCH ^
-                -e SEMGREP_REPO_NAME=`$Env:SEMGREP_REPO_NAME ^
+                docker run `
+                -e SEMGREP_APP_TOKEN=$env:SEMGREP_APP_TOKEN `
+                -e SEMGREP_REPO_URL=$env:SEMGREP_REPO_URL `
+                -e SEMGREP_BRANCH=$env:SEMGREP_BRANCH `
+                -e SEMGREP_REPO_NAME=$env:SEMGREP_REPO_NAME `
                 -v \"${absWorkspace}:${absWorkspace}\" --workdir \"${absWorkspace}\" `
                 returntocorp/semgrep semgrep ci
             """
