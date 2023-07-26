@@ -57,21 +57,22 @@ stage('Build') {
     }
 */
 
- stage('Semgrep-Scan') {
+stage('Semgrep-Scan') {
     steps {
         script {
             // Çalışma alanını Groovy tarafından alın
             def absWorkspace = pwd()
 
-            // PowerShell komutunda çevresel değişkenler için $env: kullanın
-            powershell """
+            // Batch komutunda Jenkins çalışma alanını mutlak yola çevirin
+            def absWorkspacePath = absWorkspace.replace('\\', '\\\\') // Çift ters eğik çizgi eklenmeli
+            bat """
                 docker pull returntocorp/semgrep
-                docker run `
-                -e SEMGREP_APP_TOKEN=$env:SEMGREP_APP_TOKEN `
-                -e SEMGREP_REPO_URL=$env:SEMGREP_REPO_URL `
-                -e SEMGREP_BRANCH=$env:SEMGREP_BRANCH `
-                -e SEMGREP_REPO_NAME=$env:SEMGREP_REPO_NAME `
-                -v \"${absWorkspace}:${absWorkspace}\" --workdir \"${absWorkspace}\" `
+                docker run ^
+                -e SEMGREP_APP_TOKEN=%SEMGREP_APP_TOKEN% ^
+                -e SEMGREP_REPO_URL=%SEMGREP_REPO_URL% ^
+                -e SEMGREP_BRANCH=%SEMGREP_BRANCH% ^
+                -e SEMGREP_REPO_NAME=%SEMGREP_REPO_NAME% ^
+                -v \"${absWorkspacePath}:${absWorkspacePath}\" --workdir \"${absWorkspacePath}\" ^
                 returntocorp/semgrep semgrep ci
             """
         }
