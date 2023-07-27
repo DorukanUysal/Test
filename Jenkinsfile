@@ -9,14 +9,14 @@ pipeline {
     }
 
     stages {
-        /*stage('Stop and Remove Container1') {
+        stage('Stop and Remove Container1') {
             steps {
                 echo "Removing container"
                 bat '''
                     FOR /f "tokens=*" %%i IN ('docker ps -q') DO docker stop %%i
                 '''
             }
-        }*/
+        }
 
         stage('Setting up OWASP ZAP docker container') {
             steps {
