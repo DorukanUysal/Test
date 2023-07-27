@@ -48,6 +48,7 @@ pipeline {
                 )
             }
         }
+]
 
         stage('Deploy') {
             steps {
