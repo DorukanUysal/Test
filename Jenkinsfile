@@ -55,7 +55,17 @@ stage('Setting up OWASP ZAP docker container') {
       }
     }
 */
+stage('Stop and Remove Container2') {
+      steps {
+        echo "Removing container"
+            bat '''
+                    FOR /f "tokens=*" %%i IN ('docker ps -q') DO docker stop %%i
 
+
+
+               '''
+             }
+         }
 
 stage('Semgrep-Scan') {
     steps {
