@@ -10,7 +10,7 @@ pipeline {
 
     stages {
 
-sstage('Check for Changes in Github') {
+stage('Check for Changes in Github') {
     steps {
         echo "Checking for changes in Github..."
         script {
