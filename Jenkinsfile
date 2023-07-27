@@ -9,6 +9,33 @@ pipeline {
     }
 
     stages {
+        stage('Check for Repo Updates') {
+            steps {
+                echo "Checking for repository updates..."
+                script {
+                    // Git kullanarak mevcut dalı ve son güncelleme tarihini al
+                    def gitBranch = sh(script: 'git rev-parse --abbrev-ref HEAD', returnStdout: true).trim()
+                    def lastCommitDate = sh(script: 'git log -1 --format=%cd', returnStdout: true).trim()
+
+                    // Git pull komutunu çalıştır ve değişiklikleri kontrol et
+                    def pullOutput = sh(script: 'git pull', returnStatus: true)
+
+                    if (pullOutput == 0) {
+                        echo "Repository has been updated. Pulling the latest changes..."
+                        // OWASP ZAP ve Semgrep taramalarını gerçekleştir
+                        runOWASPZAPScan()
+                        runSemgrepScan()
+                        // Snyk taramasını yalnızca "php-goof-main" dizininde gerçekleştir
+                        dir('php-goof-main') {
+                            runSnykScan()
+                        }
+                    } else {
+                        echo "Repository is up-to-date. No changes detected."
+                    }
+                }
+            }
+        }
+
         stage('Stop and Remove Container1') {
             steps {
                 echo "Removing container"
@@ -25,12 +52,12 @@ pipeline {
             }
         }
 
-        /*stage('Run Application') {
+        stage('Run Application') {
             steps {
                 bat "docker exec owasp zap-baseline.py -t http://www.example.com/ -I -j --auto -r testreport.html"
             }
         }
-*/
+
         stage('Build') {
             steps {
                 echo 'Building...'
@@ -40,14 +67,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing...'
-            dir('php-goof-main') {
-                    snykSecurity(
-                        snykInstallation: 'Synk',
-                        snykTokenId: '4f06e630-a651-4f27-bef1-47994a9dd0d4',
-                    // place other parameters here
-                )
             }
-        }
         }
 
         stage('Deploy') {
@@ -84,13 +104,6 @@ pipeline {
                         set SEMGREP_BRANCH=${SEMGREP_BRANCH} ^
                         set SEMGREP_REPO_NAME=${SEMGREP_REPO_NAME} ^
                         -v "${absWorkspacePath}:${absWorkspacePath}" --workdir "${absWorkspacePath}" ^
-                        returntocorp/semgrep semgrep ci
-                    """
-                }
-            }
-        }
-    }
-}
 
 
 
