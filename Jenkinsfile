@@ -9,7 +9,7 @@ SEMGREP_REPO_NAME = 'Test'
 }
 
   stages {
-/*stage('Stop and Remove Container1') {
+stage('Stop and Remove Container1') {
       steps {
         echo "Removing container"
             bat '''
@@ -20,7 +20,7 @@ SEMGREP_REPO_NAME = 'Test'
                '''
              }
          }
-*/
+
 
 stage('Setting up OWASP ZAP docker container') {
       steps {
