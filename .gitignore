@@ -1,0 +1,5 @@
+### Composer ###
+.DS_Store
+composer.phar
+/vendor/
+.gitignore
