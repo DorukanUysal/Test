@@ -7,8 +7,35 @@ pipeline {
         SEMGREP_BRANCH = 'main'
         SEMGREP_REPO_NAME = 'Test'
     }
-
-    stages {
+stages {
+        stage('Check for Changes in Github') {
+            steps {
+                echo "Checking for changes in Github..."
+                script {
+                    def workspaceDir = pwd()
+                    def gitChanged = false
+                    
+                    // Git 'status' command to check for changes
+                    def statusCmd = "git status --porcelain"
+                    def status = bat(script: statusCmd, returnStatus: true)
+                    if (status == 0) {
+                        echo "No changes in Github repository."
+                    } else {
+                        echo "Changes found in Github repository. Pulling the latest changes..."
+                        def pullCmd = "git pull"
+                        bat(script: pullCmd, returnStatus: true) ? gitChanged = true : gitChanged = false
+                    }
+                    
+                    if (gitChanged) {
+                        echo "Project updated. Performing the build, test, and deploy stages..."
+                    } else {
+                        echo "No changes. Skipping the build, test, and deploy stages."
+                    }
+                }
+            }
+        }
+        
+    
         stage('Stop and Remove Container1') {
             steps {
                 echo "Removing container"
