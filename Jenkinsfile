@@ -9,7 +9,7 @@ SEMGREP_REPO_NAME = 'Test'
 }
 
   stages {
-/*stage('Stop and Remove Container1') {
+stage('Stop and Remove Container1') {
       steps {
         echo "Removing container"
             bat '''
@@ -29,7 +29,7 @@ stage('Setting up OWASP ZAP docker container') {
             bat "docker run --rm -v %cd%:/zap/wrk/:rw --name owasp -dt owasp/zap2docker-stable /bin/bash"
         }
   }
-    /*stage('Run Application') {
+    stage('Run Application') {
       steps {
              bat "docker exec owasp zap-baseline.py -t http://www.example.com/ -I -j --auto -r testreport.html"
             }
