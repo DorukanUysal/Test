@@ -54,7 +54,7 @@ stage('Build') {
         echo 'Deploying...'
       }
     }
-*/
+
 
 stage('Semgrep-Scan') {
     steps {
