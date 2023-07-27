@@ -20,7 +20,7 @@ stage('Stop and Remove Container1') {
                '''
              }
          }
-*/
+
 
 stage('Setting up OWASP ZAP docker container') {
       steps {
