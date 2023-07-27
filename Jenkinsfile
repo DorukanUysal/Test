@@ -62,6 +62,8 @@ stage('Stop and Remove Container2') {
                     FOR /f "tokens=*" %%i IN ('docker ps -q') DO docker stop %%i
 
 docker stop jenkins_container
+docker rm jenkins_container
+
 
 
 
