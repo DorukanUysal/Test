@@ -40,9 +40,10 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing...'
-                snykSecurity(
-                    snykInstallation: 'Synk',
-                    snykTokenId: '4f06e630-a651-4f27-bef1-47994a9dd0d4',
+            dir('php-goof-main') {
+                    snykSecurity(
+                        snykInstallation: 'Synk',
+                        snykTokenId: '4f06e630-a651-4f27-bef1-47994a9dd0d4',
                     // place other parameters here
                 )
             }
