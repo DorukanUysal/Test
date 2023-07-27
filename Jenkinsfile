@@ -66,7 +66,8 @@ stage('Semgrep-Scan') {
             def absWorkspacePath = absWorkspace.replace('\\', '\\\\') // Çift ters eğik çizgi eklenmeli
             bat """
                 docker pull returntocorp/semgrep
-                docker run ^
+                docker run -d -p 8080:8080 -v jenkins_data:/var/jenkins_home --name jenkins_container jenkins/jenkins
+
                 -e SEMGREP_APP_TOKEN=%SEMGREP_APP_TOKEN% ^
                 -e SEMGREP_REPO_URL=%SEMGREP_REPO_URL% ^
                 -e SEMGREP_BRANCH=%SEMGREP_BRANCH% ^
