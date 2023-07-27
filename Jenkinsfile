@@ -7,35 +7,8 @@ pipeline {
         SEMGREP_BRANCH = 'main'
         SEMGREP_REPO_NAME = 'Test'
     }
-stages {
-        stage('Check for Changes in Github') {
-            steps {
-                echo "Checking for changes in Github..."
-                script {
-                    def workspaceDir = pwd()
-                    def gitChanged = false
-                    
-                    // Git 'status' command to check for changes
-                    def statusCmd = "git status --porcelain"
-                    def status = bat(script: statusCmd, returnStatus: true)
-                    if (status == 0) {
-                        echo "No changes in Github repository."
-                    } else {
-                        echo "Changes found in Github repository. Pulling the latest changes..."
-                        def pullCmd = "git pull"
-                        bat(script: pullCmd, returnStatus: true) ? gitChanged = true : gitChanged = false
-                    }
-                    
-                    if (gitChanged) {
-                        echo "Project updated. Performing the build, test, and deploy stages..."
-                    } else {
-                        echo "No changes. Skipping the build, test, and deploy stages."
-                    }
-                }
-            }
-        }
-        
-    
+
+    stages {
         stage('Stop and Remove Container1') {
             steps {
                 echo "Removing container"
@@ -57,7 +30,8 @@ stages {
                 bat "docker exec owasp zap-baseline.py -t http://www.example.com/ -I -j --auto -r testreport.html"
             }
         }
-*/
+        */
+
         stage('Build') {
             steps {
                 echo 'Building...'
@@ -67,14 +41,14 @@ stages {
         stage('Test') {
             steps {
                 echo 'Testing...'
-            dir('php-goof-main') {
+                dir('php-goof-main') {
                     snykSecurity(
                         snykInstallation: 'Synk',
-                        snykTokenId: '4f06e630-a651-4f27-bef1-47994a9dd0d4',
-                    // place other parameters here
-                )
+                        snykTokenId: '4f06e630-a651-4f27-bef1-47994a9dd0d4'
+                        // place other parameters here
+                    )
+                }
             }
-        }
         }
 
         stage('Deploy') {
@@ -106,10 +80,10 @@ stages {
                         docker pull returntocorp/semgrep
                         docker run -d -p 8081:8080 -v jenkins_data:/var/jenkins_home --name jenkins_container jenkins/jenkins
 
-                        set SEMGREP_APP_TOKEN="${SEMGREP_APP_TOKEN}" ^
-                        set SEMGREP_REPO_URL=${SEMGREP_REPO_URL} ^
-                        set SEMGREP_BRANCH=${SEMGREP_BRANCH} ^
-                        set SEMGREP_REPO_NAME=${SEMGREP_REPO_NAME} ^
+                        set SEMGREP_APP_TOKEN="%SEMGREP_APP_TOKEN%" ^
+                        set SEMGREP_REPO_URL=%SEMGREP_REPO_URL% ^
+                        set SEMGREP_BRANCH=%SEMGREP_BRANCH% ^
+                        set SEMGREP_REPO_NAME=%SEMGREP_REPO_NAME% ^
                         -v "${absWorkspacePath}:${absWorkspacePath}" --workdir "${absWorkspacePath}" ^
                         returntocorp/semgrep semgrep ci
                     """
