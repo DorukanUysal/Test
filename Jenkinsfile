@@ -34,7 +34,7 @@ stage('Setting up OWASP ZAP docker container') {
             }
         }*/
 
-stage('Build') {
+/*stage('Build') {
       steps {
         echo 'Building...'
       }
@@ -54,6 +54,7 @@ stage('Build') {
         echo 'Deploying...'
       }
     }
+*/
 
 
 stage('Semgrep-Scan') {
