@@ -59,7 +59,7 @@ stage('Check for Changes in Github') {
                 bat "docker exec owasp zap-baseline.py -t http://www.example.com/ -I -j --auto -r testreport.html"
             }
         }
-/
+
         stage('Build') {
             steps {
                 echo 'Building...'
