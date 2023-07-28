@@ -84,7 +84,7 @@ stage('Check for Changes in Github') {
                 echo 'Deploying...'
             }
         }
-/
+
 
         stage('Stop and Remove Container2') {
             steps {
