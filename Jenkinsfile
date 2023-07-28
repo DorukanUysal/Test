@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        // The following variable is required for a Semgrep Cloud Platform-connected scan:
+        
         SEMGREP_APP_TOKEN = credentials('SEMGREP_APP_TOKEN')
         SEMGREP_REPO_URL = 'https://github.com/DorukanUysal/Test.git'
         SEMGREP_BRANCH = 'main'
@@ -17,7 +17,7 @@ stage('Check for Changes in Github') {
             def workspaceDir = pwd()
             def gitChanged = false
             
-            // Git 'status' command to check for changes
+            
             def statusCmd = "git status --porcelain"
             def status = bat(script: statusCmd, returnStatus: true)
             if (status == 0) {
@@ -54,13 +54,13 @@ stage('Check for Changes in Github') {
             }
         }
 
-        /*stage('Run Application') {
+        stage('Run Application') {
             steps {
                 bat "docker exec owasp zap-baseline.py -t http://www.example.com/ -I -j --auto -r testreport.html"
             }
         }
-*/
-       /* stage('Build') {
+/
+        stage('Build') {
             steps {
                 echo 'Building...'
             }
@@ -73,7 +73,7 @@ stage('Check for Changes in Github') {
                     snykSecurity(
                         snykInstallation: 'Synk',
                         snykTokenId: '4f06e630-a651-4f27-bef1-47994a9dd0d4',
-                    // place other parameters here
+                    
                 )
             }
         }
@@ -84,7 +84,7 @@ stage('Check for Changes in Github') {
                 echo 'Deploying...'
             }
         }
-*/
+/
 
         stage('Stop and Remove Container2') {
             steps {
@@ -100,11 +100,11 @@ stage('Check for Changes in Github') {
         stage('Semgrep-Scan') {
             steps {
                 script {
-                    // Çalışma alanını Groovy tarafından alın
+                    
                     def absWorkspace = pwd()
 
-                    // Batch komutunda Jenkins çalışma alanını mutlak yola çevirin
-                    def absWorkspacePath = absWorkspace.replace('\\', '\\\\') // Çift ters eğik çizgi eklenmeli
+                    
+                    def absWorkspacePath = absWorkspace.replace('\\', '\\\\') 
                     bat """
                         docker pull returntocorp/semgrep
                         docker run -d -p 8081:8080 -v jenkins_data:/var/jenkins_home --name jenkins_container jenkins/jenkins
